@@ -1,0 +1,12 @@
+{
+  "name": "ice-home",
+  "version": "1.0.0",
+  "description": "Homepage for Interactive Catchment Explorer",
+  "main": "index.js",
+  "scripts": {
+    "start": "http-server ./public",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

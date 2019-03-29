@@ -9,15 +9,13 @@
   <link href="/libs/landing-page/css/landing-page.css" rel="stylesheet" type="text/css">
   <link href="/libs/landing-page/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
+  <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-53771846-2"></script>
   <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
 
-    ga('create', 'UA-53771846-2', 'auto');
-    ga('send', 'pageview');
-
+    gtag('config', 'UA-53771846-2');
   </script>
 
   <style>
@@ -57,7 +55,7 @@
         <p style="font-size:1.2em;">ICE is part of the <a href="http://ecosheds.org" target="_blank">Spatial Hydro-Ecological Decision System (SHEDS)</a>.</b></p></p>
       </div>
       <div class="col-md-6 text-center">
-        <a href="/sheds"><img src="/img/thumb-ice-sheds.jpg" class="img-responsive" style="width:100%; margin-bottom: 20px;"></a>
+        <a href="/sheds"><img src="/img/ice-animation.gif" class="img-responsive" style="margin-bottom: 20px;"></a>
         <p><a class="btn btn-lg btn-primary" href="/sheds">Launch ICE <span class="glyphicon glyphicon-chevron-right"></span></a></p>
       </div>
     </div>
@@ -105,154 +103,21 @@
   </div>
 </div>
 
-
 <div class="content-section-b">
   <div class="container">
     <div class="row">
-      <div class="col-xs-12 col-md-8">
-        <h2>Overview Video</h2>
-        <iframe src="https://player.vimeo.com/video/128620201" width="800" height="450" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-        <p><a href="https://vimeo.com/128620201" target="_blank">Interactive Catchment Explorer v0.4</a> (click to open video in new tab).</p>
-
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="content-section-a">
-  <div class="container">
-
-    <div class="row">
-      <div class="col-xs-12 col-md-8">
+      <div class="col-xs-12 col-md-12">
         <h2>Purpose</h2>
-
         <p>Management and restoration of hydro-ecological systems often relies on the use of large environmental datasets and model simulations. However, many of these datasets can be extremely large and difficult to process and understand using traditional methods. To increase the utility of these large environmental datasets and simulations, we need new ways of exploring the data so that we may ask questions and identify the trends and patterns needed to effectively manage and restore these valuable natural resources.</p>
-
         <p>The Interactive Catchment Explorer is a data visualization tool that was developed to facilitate exploration of large environmental datasets representing various geospatial characteristics and model simulations. The purpose of ICE is to allow users with a range of scientific and management backgrounds to better understand the complex, multi-variate relationships of environmental systems through an intuitive map-based interface at multiple spatial scales.</p>
-
         <p>ICE was originally developed to present the results from stream temperature and brook trout occupancy models of the northeastern U.S. that were developed by our research group at the USGS Conte Anadromous Fish Branch. From the beginning, however, ICE was intended to become a general platform that could be easily adapted for other environmental datasets and models. It has since been used to help other research groups across the country focus on their own datasets and model results in order to better understand the patterns and trends of their target systems.</p>
-      </div>
-    </div>
-  </div>
-</div>
 
-<div class="content-section-b">
-  <div class="container">
-
-    <div class="row">
-      <div class="col-xs-12 col-md-8">
-        <h2>Technical Background</h2>
-
-        <p>ICE provides a highly interactive and map-based user interface for exploring large environmental datasets representing geospatial characteristics and model results. These datasets are all based on a delineation of catchment areas across a larger region. A catchment represents the drainage area of a single stretch of river or stream. For the primary SHEDS version of ICE, there are nearly 400,000 catchments across the northeastern U.S. that have an average area of 2 square kilometers. Due to the sheer number and small size of these catchments, traditional GIS-based methods for viewing the data were slow and difficult to interpret, especially at the regional scale.</p>
-
-        <h3>Spatial Aggregation</h3>
-
-        <p>Therefore, instead of displaying all catchments simultaneously across a large region, ICE performs <strong>spatial aggregation</strong> by grouping these catchments into larger watershed areas. Each watershed contains many individual catchments, and thus represents a larger drainage area comprised of multiple rivers and streams. The watersheds are based on the standard <a href="http://water.usgs.gov/GIS/huc.html" target="_blank">Hydrologic Unit Code (HUC)</a> delineations for the U.S. There are multiple "levels" of HUC delineations such that each level represents a different resolution and average watershed size. Higher levels (e.g. HUC10) contain smaller watershed areas, and smaller levels (e.g. HUC6) represent larger areas. The spatial aggregation is performed by computing the area-weighted mean value of each watershed based on the values and areas of the catchments within it. The aggregated value associated with each watershed thus accurately reflects the average across its catchments but accounting for differences in catchment areas.</p>
-
-        <h3>Filtering</h3>
-
-        <p>In addition to spatial aggregation, ICE also allows users to <strong>filter</strong> the catchments through the use of one or more criteria in order to focus only on areas that have certain characteristics. For example, the user could specify a filter for percent forest cover between 50 and 100% to focus only on highly forested areas. As a result, ICE will remove all catchments that do not meet that criteria, and then re-compute the spatial aggregation of each watershed. The map will then show the area-weighted mean value for each watershed based only on the catchments with forest cover of 50% or more. The user can specify more than one filter criteria, and interactively change each filter and see the map respond in near-real time. This interaction provides powerful insight into the spatial patterns and relationships between variables in a way that is not possible using tradition GIS interfaces.</p>
-
-        <h3>Design and Implementation</h3>
-
-        <p>In order to achieve the spatial aggregation and catchment filtering in a highly responsive way, ICE was developed as a client-side web application, which means all computations are performed within the user's web browser (as opposed to remotely on the web server). The application  is comprised of two primary components:</p>
-        <ul>
-          <li><strong>Analytics Engine</strong>: the <a href="http://square.github.io/crossfilter/">crossfilter.js</a> library provides an extremely fast computational engine that can filter and aggregate large multi-variate datasets in near-real time and all within the user's web browser.</li>
-          <li><strong>Visualization Platform</strong>: the <a href="https://d3js.org">d3.js</a> library is a powerful toolkit for developing interactive visualizations including both tradition charts as well as browser-based GIS maps that can respond to user inputs such as clicking and dragging, and update with great speed and efficiency.</li>
-        </ul>
-
-        <p>The design of ICE was inspired by the Visual Information-Seeking Mantra described by <a href="http://dx.doi.org/10.1109/VL.1996.545307" target="_blank">Schneiderman (1996)</a>: </p>
-        <blockquote>
-          "Overview first, zoom and filter, then details on demand"
-        </blockquote>
-
-        <p>Specifically, ICE provides the following core features and functionalities:</p>
-        <ul>
-          <li><strong>Overview</strong>: Spatially aggregate variables to multiple watershed delineations (e.g. HUC levels) in order to see larger regional patterns</li>
-          <li><strong>Filter</strong>: Filter catchments based on multiple criteria using interactive histograms. These filters dynamically update both the spatial aggregation and histograms of other variables.</li>
-          <li><strong>Zoom</strong>: Show individual catchments within a selected HUC (HUC8 and HUC10 levels only)</li>
-          <li><strong>Compare</strong>: Select a HUC or catchment to compare its values to the rest of the population</li>
-        </ul>
-
-        <h3>Software Libraries</h3>
-
-        <p>ICE was developed using the following software and libraries:</p>
-        <ul>
-          <li><strong><a href="https://nodejs.org/" target="_blank">Node.js</a></strong>: Web server runtime</li>
-          <li><strong><a href="https://expressjs.com/" target="_blank">Express</a></strong>: Web server framework and API</li>
-          <li><strong><a href="http://getbootstrap.com/" target="_blank">Bootstrap</a></strong>: Front-end framework and styles</li>
-          <li><strong><a href="https://jquery.com//" target="_blank">jQuery</a></strong>: Application logic</li>
-          <li><strong><a href="https://d3js.org">D3.js</a></strong>: Data visualization, mapping, and interaction</li>
-          <li><strong><a href="https://square.github.io/crossfilter/" target="_blank">Crossfilter.js</a></strong>: Analytics engine</li>
-          <li><strong><a href="https://github.com/mbostock/topojson" target="_blank">Topojson.js</a></strong>: Geospatial data format</li>
-          <li><strong><a href="https://github.com/d3/d3-queue" target="_blank">Queue.js</a></strong>: Asynchronous dataset and file retrieval</li>
-        </ul>
-
-        <h3>System Requirements</h3>
-
-        <p>ICE is currently supported on the latest versions of all major web browsers. <a href="https://www.google.com/chrome/browser/desktop/" target="_blank">Google Chrome</a> is highly recommended for the best user experience. ICE is not intended for use on mobile devices.</p>
-        <p>Note that ICE is a memory-intensive application. Older computers may have difficulty rendering the interface resulting in sluggish performance. If you run into issues, we recommend closing all other programs and browser tabs to increase available memory.</p>
-
-        <h3>Future Work and Contact Info</h3>
-
-        <p>Development of ICE is currently ongoing and future updates will include performance improvements, additional features, and greater generalization so that it may be more easily adapted to new datasets for other projects and in other regions. If you have any questions, discover any bugs, or are interested in applying ICE to your dataset, please contact us at <a href="mailto:ecosheds.org@gmail.com">ecosheds.org@gmail.com</a>.</p>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="content-section-a">
-  <div class="container">
-    <div class="row">
-      <div class="col-xs-12 col-md-8">
         <h2>Project Team</h2>
-        <p>ICE was developed by <a href="http://walkerenvres.com" target="_blank">Jeffrey D. Walker, PhD</a> and <a href="http://www.lsc.usgs.gov/?q=cafb-ben-letcher" target="_blank">Ben Letcher, PhD</a> through the USGS Conte Anadromous Fish Lab and UMass Amherst Dept. of Environmental Conservation.</p>
+        <p>ICE is developed by <a href="http://walkerenvres.com" target="_blank">Jeffrey D. Walker, PhD</a> and <a href="http://www.lsc.usgs.gov/?q=cafb-ben-letcher" target="_blank">Ben Letcher, PhD</a> through the USGS Conte Anadromous Fish Lab and UMass Amherst Dept. of Environmental Conservation.</p>
         <p>Modeling and database support was provided by Dan Hocking, PhD and Kyle O'Neil. Additional web development support was provided by Chris Jennison.</p>
-      </div>
-    </div>
-  </div>
-</div>
 
-<div class="content-section-b">
-  <div class="container">
-    <div class="row">
-      <div class="col-xs-12 col-md-8">
         <h2>Funding Sources</h2>
         <p>ICE is funded by the <a href="https://necsc.umass.edu/" target="_blank">NE Climate Science Center</a>, <a href="http://northatlanticlcc.org/" target="_blank">North Atlantic Landscape Conservation Cooperative</a>, <a href="http://www.usgs.gov/hurricane/sandy/#overview.html" target="_blank">USGS and DOI Hurricane Sandy Restoration funds</a>, and the <a href="https://nccwsc.usgs.gov/" target="_blank">USGS National Climate Science Center</a>.</p>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="content-section-a">
-  <div class="container">
-    <div class="row">
-      <div class="col-xs-12 col-md-8">
-        <h2>Recent Updates</h2>
-        <h4>v0.5.3 - 2016-03-22</h4>
-        <ul>
-          <li>Add max threshold temperature variables for brook trout occupancy model</li>
-          <li>Set brook trout occupancy model to NA outside EBTJV region</li>
-        </ul>
-        <h4>v0.5.0 - 2016-03-19</h4>
-        <ul>
-          <li>Use new high-resolution catchment delineation (NHDHRDV2)</li>
-          <li>Update stream temperature model and brook trout occupancy model results based on new delineation</li>
-        </ul>
-        <h4>v0.4.1 - 2015-06-03</h4>
-        <ul>
-          <li>Replace Mean July Temperature with Mean Summer Temperature in available variables for Stream Temperature Model</li>
-        </ul>
-        <h4>v0.4.0 - 2015-05-26</h4>
-        <ul>
-          <li>Add results from Brook Trout Occupancy Model and remove some variables from Stream Temperature Model</li>
-          <li>Add about page pop up window</li>
-          <li>Renamed "% Area Selected" aggregation variable to "% Catchment Area Selected in HUC"</li>
-        </ul>
-        <h4>v0.3.0 - 2015-05-19</h4>
-        <ul>
-          <li>Added hover interaction to show catchment values on bar charts on mouseover</li>
-        </ul>
       </div>
     </div>
   </div>
@@ -262,7 +127,7 @@
   <div class="container">
     <div class="row">
       <div class="col-xs-12">
-        <p class="copyright text-muted">Copyright &copy; 2016-2018 SHEDS Development Team</p>
+        <p class="copyright text-muted">Copyright &copy; 2016-2019 SHEDS Development Team</p>
       </div>
     </div>
   </div>
